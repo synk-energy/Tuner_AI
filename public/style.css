@@ -39,6 +39,10 @@ body {
   scroll-behavior: smooth;
 }
 
+#login_container.input {
+  font-size: 50px;
+}
+
 /* hides scrollbar */
 #chat_container::-webkit-scrollbar {
   display: none;
@@ -128,7 +132,7 @@ textarea {
   width: 100%;
 
   color: #fff;
-  font-size: 18px;
+  font-size: 100px;
 
   padding: 10px;
   background: transparent;

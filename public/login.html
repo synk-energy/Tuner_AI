@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Boosted 4.0 TunerAI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div id="app">
+    <div id="login_container">
+      <!-- invisible div -->
+      <div id="error_container"></div>
+      <h1>TunerAI Login</h1>
+      <form action="/login" method="post">
+        <input type="password" name="password" placeholder="Password" />
+        <button type="submit">Login</button>
+      </form>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const error = urlParams.get('error');
+
+    console.log("Hello World! " + error)
+
+    if (error === "true") {
+      const err = document.getElementById("error_container");
+
+      if (!err) {
+        console.log("Error: err not found");
+      }
+
+      err.innerHTML = "<h2 style=\"color:red\">Invalid password</h2>";
+    }
+  </script>
+</body>
+</html>
