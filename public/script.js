@@ -1,6 +1,3 @@
-// import bot from './assets/bot.svg';
-// import user from './assets/user.svg';
-
 const form = document.querySelector('form');
 const chatContainer = document.querySelector('#chat_container');
 
@@ -42,7 +39,7 @@ function generateUniqueId() {
 function chatStripe(isAi, value, uniqueId) {
   const bot = "./assets/bot.svg";
   const user = "./assets/user.svg";
-  
+
   return (
     `
      <div class="wrapper ${isAi && 'ai'}">
@@ -84,7 +81,7 @@ const handelSubmit = async (e) => {
   
   // post to server endpoint
   
-  const response = await fetch('/', {
+  const response = await fetch('/api/prompt', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

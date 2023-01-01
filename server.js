@@ -20,13 +20,8 @@ app.use(express.static('public'))
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 
-app.get('/', async (req, res) => {
-  res.status(200).send({
-    message: 'Hello from Cyb3r Space',
-  })
-})
 
-app.post('/', async (req, res) => {
+app.post('/api/prompt', async (req, res) => {
   try {
     const prompt = req.body.prompt;
 
@@ -64,7 +59,7 @@ app.post('/', async (req, res) => {
   }
 })
 
-app.post('/login', async (req, res) => {
+app.post('/api/login', async (req, res) => {
   let password = req.body.password;
 
   if (password == process.env.PASSWORD) {
