@@ -37,10 +37,10 @@ app.post('/', async (req, res) => {
     if (password != process.env.PASSWORD) {
       // delete cookie
       res.clearCookie('password');
-      
-      res.status(401).send({
-        error: 'Unauthorized'
-      });
+
+      res.status(302)
+        .header('Location', '/login.html?error=true')
+        .send();
     };
 
     console.log("Calling with prompt: ", prompt);
