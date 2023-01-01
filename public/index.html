@@ -20,10 +20,9 @@
   </div>
 
   <script type="module" src="script.js"></script>
-  <s
-  ccript>
-    // if a cookie is not defined, redirect to login
-    if (!document.cookie) {
+  <script>
+    // if the password cookie is not set, redirect to login page
+    if (!document.cookie.includes("password")) {
       window.location.href = "/login.html";
     }
   </script>
