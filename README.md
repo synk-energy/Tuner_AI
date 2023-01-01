@@ -7,10 +7,6 @@ The following environment variables are required
 * `OPENAI_API_KEY`
 * `PASSWORD`
 
-## Authentication/Authorization
-A rudimentary authentication scheme is implemented. "Login" generates a cookie containing the password.  Subsequent requests to the website
-will make a comparison against that cookie password.
-
 ## Server
 To run the server locally
 
