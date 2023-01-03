@@ -63,7 +63,7 @@ app.post('/api/login', async (req, res) => {
   let password = req.body.password;
 
   if (password == process.env.PASSWORD) {
-    res.cookie('password', password, { maxAge: 900000 });
+    res.cookie('password', password, { maxAge: 900000, sameSite: 'none', secure: true });
 
     res.status(302)
       .header('Location', '/index.html')
