@@ -25,13 +25,11 @@
     const urlParams = new URLSearchParams(window.location.search);
     const error = urlParams.get('error');
 
-    console.log("Hello World! " + error)
-
     if (error === "true") {
       const err = document.getElementById("error_container");
 
       if (!err) {
-        console.log("Error: err not found");
+        console.log("Error: `error_container` div not found");
       }
 
       err.innerHTML = "<h2 style=\"color:red\">Invalid password</h2>";
