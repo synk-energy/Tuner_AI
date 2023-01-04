@@ -47,10 +47,25 @@
 
   <script type="module" src="script.js"></script>
   <script>
-    let canExitModal = true;
+    const getCookie = (name) => {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
     const modal = document.querySelector(".modal");
     const modalCloseButton = document.querySelector(".close_button");
     const modalSubmitButton = document.querySelector(".modal_submit");
+
+    // print window dimensions
+    console.log(window.innerWidth, window.innerHeight);
+
+    function updateHeaderText() {
+      const headerText = document.getElementById("header_text");
+      const configuration = JSON.parse(getCookie("configuration"));
+
+      headerText.innerHTML = `${configuration.year} ${configuration.make} ${configuration.model}`;
+    }
 
     function setConfiguration() {
       const year = document.getElementById("year").value;
@@ -66,16 +81,18 @@
       };
 
       if (document.cookie.includes("configuration")) {
+        const cookie = JSON.parse(getCookie("configuration"));
+
         configuration = {
-          ...JSON.parse(document.cookie.split("configuration=")[1]),
+          ...cookie,
           ...configuration,
         };
       }
 
       document.cookie = `configuration=${JSON.stringify(configuration)}`;
-      canExitModal = true;
 
       toggleModal();
+      updateHeaderText()
     }
 
     function toggleModal() {
@@ -83,20 +100,12 @@
 
       // if the cookie exists, set the values in the modal to the cookie values
       if (document.cookie.includes("configuration")) {
-        const configuration = JSON.parse(
-          document.cookie.split("configuration=")[1]
-        );
+        const configuration = JSON.parse(getCookie("configuration"));
 
         document.getElementById("year").value = configuration.year;
         document.getElementById("make").value = configuration.make;
         document.getElementById("model").value = configuration.model;
         document.getElementById("part").value = configuration.part;
-      }
-
-      if (canExitModal) {
-        modalExit.style.display = "block";
-      } else {
-        modalExit.style.display = "none";
       }
 
       modal.classList.toggle("show-modal");
@@ -113,7 +122,6 @@
 
     modalCloseButton.addEventListener("click", toggleModal);
     modalSubmitButton.addEventListener("click", setConfiguration);
-    window.addEventListener("click", windowOnClick);
 
     // if the password cookie is not set, redirect to login page
     if (!document.cookie.includes("password")) {
@@ -122,9 +130,10 @@
 
     // if the configuration cookie is not set, open the modal
     if (!document.cookie.includes("configuration")) {
-      canExitModal = false;
       toggleModal();
     }
+
+    updateHeaderText();
   </script>
 </body>
 

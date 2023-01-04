@@ -153,11 +153,12 @@ body {
   gap: 10px;
 }
 
+
 textarea {
   width: 100%;
 
   color: #fff;
-  font-size: 18;
+  font-size: 18px;
 
   padding: 10px;
   background: transparent;

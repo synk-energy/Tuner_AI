@@ -39,8 +39,20 @@ app.post('/api/prompt', async (req, res) => {
     };
 
     let configuration = JSON.parse(req.cookies.configuration);
-    let prefix = `Tuner, on a ${configuration.year} ${configuration.make} ${configuration.model}`;
+    let prefix = "Tuner";
 
+    if (configuration.year) {
+      prefix += ` on a ${configuration.year}`;
+    }
+
+    if (configuration.make) {
+      prefix += ` ${configuration.make}`;
+    }
+
+    if (configuration.model) {
+      prefix += ` ${configuration.model}`;
+    }
+    
     if (configuration.part) {
       prefix += ` when working on the ${configuration.part}`;
     }
@@ -68,7 +80,7 @@ app.post('/api/prompt', async (req, res) => {
       response: response.data.choices[0].text
     })
   } catch (error) {
-    console.log(error);
+    //console.log(error);
     res.status(500).send({ error })
   }
 })
