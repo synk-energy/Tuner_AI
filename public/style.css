@@ -53,7 +53,7 @@ body {
   margin: 0 auto;
   text-align: center;
   font-size: 25px;
-  font-family: 'Courier New', Courier, monospace;
+  /* font-family: 'Courier New', Courier, monospace; */
   color: grey;
   display: flex;
   align-items: center;
