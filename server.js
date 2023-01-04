@@ -38,11 +38,25 @@ app.post('/api/prompt', async (req, res) => {
         .send();
     };
 
-    console.log("Calling with prompt: ", prompt);
+    let configuration = JSON.parse(req.cookies.configuration);
+    let prefix = `Tuner, on a ${configuration.year} ${configuration.make} ${configuration.model}`;
+
+    if (configuration.part) {
+      prefix += ` when working on the ${configuration.part}`;
+    }
+
+    let full_prompt = `${prefix} ${prompt}`;
+
+    // Tuner, on a
+    // (make/model/year)
+    // when working on the the
+    // (part type/sub type)
+
+    console.log("Calling with prompt: ", full_prompt);
 
     const response = await openai.createCompletion({
       model: "text-davinci-003",
-      prompt: `${prompt}`,
+      prompt: `${full_prompt}`,
       temperature: 0.45,
       max_tokens: 2688,
       top_p: 0.54,
@@ -63,7 +77,7 @@ app.post('/api/login', async (req, res) => {
   let password = req.body.password;
 
   if (password == process.env.PASSWORD) {
-    res.cookie('password', password, { maxAge: 900000, sameSite: 'none', secure: true });
+    res.cookie('password', password, { maxAge: 2678400000, sameSite: 'none', secure: true });
 
     res.status(302)
       .header('Location', '/index.html')
