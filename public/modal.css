@@ -43,8 +43,9 @@
     transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
 }
 
-.modal_submit {
+.modal_button {
     border: 2px solid lightgrey;
+    opacity: 0.8;
     background-color: grey;
     border-radius: 4px;
     color: black;
@@ -55,6 +56,17 @@
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
+    width: 35%
+}
+
+.modal_submit {
+    border: 2px solid lightgrey;
+    background-color: green;
+}
+
+.modal_clear {
+    border: 2px solid lightgrey;
+    background-color: red;
 }
 
 .modal_form {

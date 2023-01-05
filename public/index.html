@@ -30,7 +30,11 @@
 
             <br>
             <!-- Button -->
-            <button class="modal_submit" type="button">Submit</button>
+            <!-- Align buttons center -->
+            <div style="text-align: center;">
+              <button class="modal_submit modal_button" type="button">Submit</button>
+              <button class="modal_clear modal_button" type="button">Clear</button>
+            </div>
           </form>
       </div>
     </div>
@@ -56,13 +60,22 @@
     const modal = document.querySelector(".modal");
     const modalCloseButton = document.querySelector(".close_button");
     const modalSubmitButton = document.querySelector(".modal_submit");
+    const modalClearButton = document.querySelector(".modal_clear");
 
-    // print window dimensions
-    console.log(window.innerWidth, window.innerHeight);
+    function deleteCookie(name) {
+      document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    }
 
     function updateHeaderText() {
       const headerText = document.getElementById("header_text");
-      const configuration = JSON.parse(getCookie("configuration"));
+      const cookie = getCookie("configuration");
+
+      if (!cookie) {
+        headerText.innerHTML = "No configuration set";
+        return;
+      }
+
+      const configuration = JSON.parse(cookie);
 
       headerText.innerHTML = `${configuration.year} ${configuration.make} ${configuration.model}`;
     }
@@ -79,6 +92,13 @@
         model: model,
         part: part,
       };
+
+      // if none of the values are set, don't save
+      if (!year && !make && !model && !part) {
+        deleteCookie("configuration");
+        toggleModal();
+        return;
+      }
 
       if (document.cookie.includes("configuration")) {
         const cookie = JSON.parse(getCookie("configuration"));
@@ -122,6 +142,11 @@
 
     modalCloseButton.addEventListener("click", toggleModal);
     modalSubmitButton.addEventListener("click", setConfiguration);
+    modalClearButton.addEventListener("click", () => {
+      deleteCookie("configuration");
+      updateHeaderText();
+      toggleModal();
+    });
 
     // if the password cookie is not set, redirect to login page
     if (!document.cookie.includes("password")) {

@@ -39,7 +39,7 @@ app.post('/api/prompt', async (req, res) => {
     };
 
     let configuration = JSON.parse(req.cookies.configuration);
-    let prefix = "Tuner";
+    let prefix = "Tuner,";
 
     if (configuration.year) {
       prefix += ` on a ${configuration.year}`;
@@ -52,7 +52,7 @@ app.post('/api/prompt', async (req, res) => {
     if (configuration.model) {
       prefix += ` ${configuration.model}`;
     }
-    
+
     if (configuration.part) {
       prefix += ` when working on the ${configuration.part}`;
     }

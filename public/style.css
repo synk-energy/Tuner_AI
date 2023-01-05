@@ -53,8 +53,7 @@ body {
   margin: 0 auto;
   text-align: center;
   font-size: 25px;
-  /* font-family: 'Courier New', Courier, monospace; */
-  color: grey;
+  color: white;
   display: flex;
   align-items: center;
   justify-content: right;
