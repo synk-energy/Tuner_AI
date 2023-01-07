@@ -38,37 +38,11 @@ app.post('/api/prompt', async (req, res) => {
         .send();
     };
 
-    let configuration = JSON.parse(req.cookies.configuration);
-    let prefix = "Tuner,";
-
-    if (configuration.year) {
-      prefix += ` on a ${configuration.year}`;
-    }
-
-    if (configuration.make) {
-      prefix += ` ${configuration.make}`;
-    }
-
-    if (configuration.model) {
-      prefix += ` ${configuration.model}`;
-    }
-
-    if (configuration.part) {
-      prefix += ` when working on the ${configuration.part}`;
-    }
-
-    let full_prompt = `${prefix} ${prompt}`;
-
-    // Tuner, on a
-    // (make/model/year)
-    // when working on the the
-    // (part type/sub type)
-
-    console.log("Calling with prompt: ", full_prompt);
+    console.log("Calling with prompt: ", prompt);
 
     const response = await openai.createCompletion({
       model: "text-davinci-003",
-      prompt: `${full_prompt}`,
+      prompt: `${prompt}`,
       temperature: 0.45,
       max_tokens: 2688,
       top_p: 0.54,
@@ -80,7 +54,7 @@ app.post('/api/prompt', async (req, res) => {
       response: response.data.choices[0].text
     })
   } catch (error) {
-    //console.log(error);
+    console.log(error);
     res.status(500).send({ error })
   }
 })
@@ -89,7 +63,7 @@ app.post('/api/login', async (req, res) => {
   let password = req.body.password;
 
   if (password == process.env.PASSWORD) {
-    res.cookie('password', password, { maxAge: 2678400000, sameSite: 'none', secure: true });
+    res.cookie('password', password, { maxAge: 900000, sameSite: 'none', secure: true });
 
     res.status(302)
       .header('Location', '/index.html')

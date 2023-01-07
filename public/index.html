@@ -7,43 +7,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Boosted 4.0 TunerAI</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="modal.css">
 </head>
 
 <body>
   <div id="app">
-    <div class="modal">
-      <div class="modal_content">
-          <span class="close_button">&times;</span>
-          <form class="modal_form">
-            <label for="year">Year</label>
-            <input type="text" id="year" name="year" placeholder="2019" required>
-            <br>
-            <label for="make">Make</label>
-            <input type="text" id="make" name="make" placeholder="Toyota" required>
-            <br>
-            <label for="model">Model</label>
-            <input type="text" id="model" name="model" placeholder="Corolla" required>
-            <br>
-            <label form="part">Part</label>
-            <input type="text" id="part" name="part" placeholder="Transmission">
-
-            <br>
-            <!-- Button -->
-            <!-- Align buttons center -->
-            <div style="text-align: center;">
-              <button class="modal_submit modal_button" type="button">Submit</button>
-              <button class="modal_clear modal_button" type="button">Clear</button>
-            </div>
-          </form>
-      </div>
-    </div>
-    <div id="header_container">
-      <div id="header_text"></div>
-      <img src="assets/cog.svg" onclick="toggleModal(false)"/>
-    </div>
     <div id="chat_container"></div>
-    <form id="chat_form">
+
+    <form>
       <textarea name="prompt" rows="1" cols="1" placeholder="Ask Tuner..."></textarea>
       <button type="submit"><img src="assets/send.svg" /></button>
     </form>
@@ -51,114 +21,10 @@
 
   <script type="module" src="script.js"></script>
   <script>
-    const getCookie = (name) => {
-      const value = `; ${document.cookie}`;
-      const parts = value.split(`; ${name}=`);
-      if (parts.length === 2) return parts.pop().split(';').shift();
-    }
-
-    const modal = document.querySelector(".modal");
-    const modalCloseButton = document.querySelector(".close_button");
-    const modalSubmitButton = document.querySelector(".modal_submit");
-    const modalClearButton = document.querySelector(".modal_clear");
-
-    function deleteCookie(name) {
-      document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-    }
-
-    function updateHeaderText() {
-      const headerText = document.getElementById("header_text");
-      const cookie = getCookie("configuration");
-
-      if (!cookie) {
-        headerText.innerHTML = "No configuration set";
-        return;
-      }
-
-      const configuration = JSON.parse(cookie);
-
-      headerText.innerHTML = `${configuration.year} ${configuration.make} ${configuration.model}`;
-    }
-
-    function setConfiguration() {
-      const year = document.getElementById("year").value;
-      const make = document.getElementById("make").value;
-      const model = document.getElementById("model").value;
-      const part = document.getElementById("part").value;
-
-      let configuration = {
-        year: year,
-        make: make,
-        model: model,
-        part: part,
-      };
-
-      // if none of the values are set, don't save
-      if (!year && !make && !model && !part) {
-        deleteCookie("configuration");
-        toggleModal();
-        return;
-      }
-
-      if (document.cookie.includes("configuration")) {
-        const cookie = JSON.parse(getCookie("configuration"));
-
-        configuration = {
-          ...cookie,
-          ...configuration,
-        };
-      }
-
-      document.cookie = `configuration=${JSON.stringify(configuration)}`;
-
-      toggleModal();
-      updateHeaderText()
-    }
-
-    function toggleModal() {
-      const modalExit = document.querySelector(".close_button");
-
-      // if the cookie exists, set the values in the modal to the cookie values
-      if (document.cookie.includes("configuration")) {
-        const configuration = JSON.parse(getCookie("configuration"));
-
-        document.getElementById("year").value = configuration.year;
-        document.getElementById("make").value = configuration.make;
-        document.getElementById("model").value = configuration.model;
-        document.getElementById("part").value = configuration.part;
-      }
-
-      modal.classList.toggle("show-modal");
-    }
-
-    // TODO: this doesn't work well, if you go to drag-click it exists
-    // function windowOnClick(event) {
-    //   if (event.target === modal) {
-    //     if (canExitModal) {
-    //       toggleModal();
-    //     }
-    //   }
-    // }
-
-    modalCloseButton.addEventListener("click", toggleModal);
-    modalSubmitButton.addEventListener("click", setConfiguration);
-    modalClearButton.addEventListener("click", () => {
-      deleteCookie("configuration");
-      updateHeaderText();
-      toggleModal();
-    });
-
     // if the password cookie is not set, redirect to login page
     if (!document.cookie.includes("password")) {
       window.location.href = "/login.html";
     }
-
-    // if the configuration cookie is not set, open the modal
-    if (!document.cookie.includes("configuration")) {
-      toggleModal();
-    }
-
-    updateHeaderText();
   </script>
 </body>
 

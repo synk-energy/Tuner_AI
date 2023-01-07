@@ -1,4 +1,4 @@
-const form = document.querySelector('#chat_form');
+const form = document.querySelector('form');
 const chatContainer = document.querySelector('#chat_container');
 
 let loadInterval;
@@ -78,9 +78,9 @@ const handelSubmit = async (e) => {
   loader(messageDiv)
 
   //fetch data from server -> bot's response
-
+  
   // post to server endpoint
-
+  
   const response = await fetch('/api/prompt', {
     method: 'POST',
     headers: {
