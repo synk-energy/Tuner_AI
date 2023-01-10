@@ -109,7 +109,7 @@
         };
       }
 
-      document.cookie = `configuration=${JSON.stringify(configuration)}`;
+      document.cookie = `configuration=${JSON.stringify(configuration)} SameSite=None; Secure`;
 
       toggleModal();
       updateHeaderText()
